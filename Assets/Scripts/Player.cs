@@ -14,13 +14,21 @@ public class Player : MonoBehaviour
 
     public Bullet bulletPrefab;
 
+    private Bounds screenBounds;
+
+    private float warpOffset = 0.3f;
+
     private void Awake()
     {
         // Player class is attached to the Player component (with a RigidBody2D element), this will grab that reference 
         _rigidbody = GetComponent<Rigidbody2D>();
+        
+        screenBounds = new Bounds();
+        screenBounds.Encapsulate(Camera.main.ScreenToWorldPoint(Vector3.zero));
+        screenBounds.Encapsulate(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f)));  
     }
 
-    // Update is called once per frame (variable - dependent on frame rate of game
+    // Update is called once per frame (variable - dependent on frame rate of game)
     private void Update()
     {
         _thursting = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
@@ -38,7 +46,7 @@ public class Player : MonoBehaviour
             _turnDirection = 0.0f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             Shoot();
         }
@@ -47,6 +55,17 @@ public class Player : MonoBehaviour
     // FixedUpdate is called on a fixed time interval (for physics related code)
     private void FixedUpdate()
     {
+        // Player boundry warping
+        if (_rigidbody.position.x > screenBounds.max.x + warpOffset) {
+            _rigidbody.position = new Vector2(screenBounds.min.x - warpOffset, _rigidbody.position.y);
+        } else if (_rigidbody.position.x < screenBounds.min.x - warpOffset) {
+            _rigidbody.position = new Vector2(screenBounds.max.x + warpOffset, _rigidbody.position.y);
+        } else if (_rigidbody.position.y > screenBounds.max.y + warpOffset) {
+            _rigidbody.position = new Vector2(_rigidbody.position.x, screenBounds.min.y - warpOffset);
+        } else if (_rigidbody.position.y < screenBounds.min.y - warpOffset) {
+            _rigidbody.position = new Vector2(_rigidbody.position.x, screenBounds.max.y + warpOffset);
+        }
+
         if (_thursting)
         {
             _rigidbody.AddForce(this.transform.up * thrustSpeed);
