@@ -31,24 +31,27 @@ public class Player : MonoBehaviour
     // Update is called once per frame (variable - dependent on frame rate of game)
     private void Update()
     {
-        _thursting = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+        if (!PauseMenu.isPaused)
+        {
+            _thursting = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            _turnDirection = 1.0f;
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            _turnDirection = -1.0f;
-        }
-        else
-        {
-            _turnDirection = 0.0f;
-        }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                _turnDirection = 1.0f;
+            }
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                _turnDirection = -1.0f;
+            }
+            else
+            {
+                _turnDirection = 0.0f;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {
-            Shoot();
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+            }   
         }
     }
 
