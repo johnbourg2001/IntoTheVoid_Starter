@@ -14,9 +14,9 @@ public class Asteroid : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
 
-    private float largeCutoff;
-    private float mediumCutoff;
-    private float smallCutoff;
+    public float largeCutoff;
+    public float mediumCutoff;
+    public float smallCutoff;
     private float extraSpawnChance = 0.2f; // 20% chance to spawn an extra, smallest asteroid on largest asteroids
 
     private void Awake()
@@ -67,6 +67,7 @@ public class Asteroid : MonoBehaviour
                     CreateSplit(this.minSize);
                 }
             }
+            FindObjectOfType<GameManager>().AsteroidDestroyed(this);
             Destroy(this.gameObject);
         }
     }

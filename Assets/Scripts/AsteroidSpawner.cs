@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-    public float spawnRate = 2.0f;
-    public int spawnAmount = 1;
+    public float spawnRate = 4.0f;
+    public int spawnAmount = 2;
     public float spawnDistance = 5.0f;
     public float trajectoryVariance = 15.0f;
 
@@ -13,7 +13,12 @@ public class AsteroidSpawner : MonoBehaviour
     
     private void Start()
     {
+        // Asteroid spawner
         InvokeRepeating(nameof(SpawnAsteroid), this.spawnRate, this.spawnRate);
+    }
+
+    void Update()
+    {
     }
 
     private void SpawnAsteroid()
