@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public Player player;
 
+    public GameOverMenu gameOver;
+
     public int lives = 3;
 
     public float RespawnTime = 3.0f;
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(Time.time);
         string timeText = string.Format("{0:D2}:{1:D2}<br>", timeSpan.Minutes, timeSpan.Seconds);
-        scoreText.text = timeText + "Score:<br>" + score;
+        scoreText.text = timeText + "Score<br>" + score;
     }
 
     
@@ -112,6 +114,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         //TODO
-        Time.timeScale = 0.0f;
+        gameOver.GameOver();
     }
 }

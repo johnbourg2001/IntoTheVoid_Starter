@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private bool shotgunShotAllowed = true;
 
 
+
     private void Awake()
     {
         // Player class is attached to the Player component (with a RigidBody2D element), this will grab that reference 
