@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     private bool shotgunShotAllowed = true;
 
 
+    public float LifeTime = 0.0f;
+    private float timeStart;
 
     private void Awake()
     {
@@ -37,7 +39,8 @@ public class Player : MonoBehaviour
         
         screenBounds = new Bounds();
         screenBounds.Encapsulate(Camera.main.ScreenToWorldPoint(Vector3.zero));
-        screenBounds.Encapsulate(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f)));  
+        screenBounds.Encapsulate(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f)));
+        timeStart = Time.time;
     }
 
     public void TurnOnCollition()
@@ -78,6 +81,7 @@ public class Player : MonoBehaviour
                 if(shotgunShotAllowed)
                     StartCoroutine(Shotgun(shotgunCooldown));
             }   
+            LifeTime = Time.time - timeStart;
         }
     }
 

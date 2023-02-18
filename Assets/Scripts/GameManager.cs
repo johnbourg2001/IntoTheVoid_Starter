@@ -32,7 +32,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject); // Keep the GameObject, this component is attached to, across different scenes
             Instance = this;
         } else if(Instance != this) { // If there is already an instance and it's not `this` instance
-            Destroy(gameObject); // Destroy the GameObject, this component is attached to
+            //TODO - Look into this, I think this is needed but it also breaks shit
+            //Destroy(gameObject); // Destroy the GameObject, this component is attached to
         }
     }
     
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(Time.time);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(player.LifeTime);
         string timeText = string.Format("{0:D2}:{1:D2}<br>", timeSpan.Minutes, timeSpan.Seconds);
         scoreText.text = timeText + "Score<br>" + score;
     }
@@ -114,6 +115,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         //TODO
-        gameOver.GameOver();
+        gameOver.DisplayGameOver();
     }
 }
