@@ -19,6 +19,9 @@ public class Asteroid : MonoBehaviour
     public float smallCutoff;
     private float extraSpawnChance = 0.2f; // 20% chance to spawn an extra, smallest asteroid on largest asteroids
 
+
+    private GameManager gameManager;
+
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -29,6 +32,8 @@ public class Asteroid : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        gameManager = GameManager.Instance; // Assign the `gameManager` variable by using the static reference
+
         _spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
         
         this.transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);
@@ -55,19 +60,17 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            if (this.size >= this.mediumCutoff)
-            {
+            if (this.size >= this.mediumCutoff) {
                 CreateSplit(this.size * 0.5f);
                 CreateSplit(this.size * 0.5f);        
             }
-            if (this.size >= (this.maxSize * 0.9f)) // On largest asteroids (90%+ max size)
-            {
-                if (Random.Range(0.0f, 1.0f) < extraSpawnChance) // 20% chance to spawn an extra, smallest asteroid
-                {
+            if (this.size >= (this.maxSize * 0.9f)) { // On largest asteroids (90%+ max size)
+                if (Random.Range(0.0f, 1.0f) < extraSpawnChance) { // 20% chance to spawn an extra, smallest asteroid
+                
                     CreateSplit(this.minSize);
                 }
             }
-            FindObjectOfType<GameManager>().AsteroidDestroyed(this);
+            gameManager.AsteroidDestroyed(this);
             Destroy(this.gameObject);
         }
     }
